@@ -16,3 +16,9 @@
 /Users/diegocollares/bootcamp2020/dotnet/Shop/obj/Debug/netcoreapp3.1/Shop.RazorTargetAssemblyInfo.cache
 /Users/diegocollares/bootcamp2020/dotnet/Shop/obj/Debug/netcoreapp3.1/Shop.dll
 /Users/diegocollares/bootcamp2020/dotnet/Shop/obj/Debug/netcoreapp3.1/Shop.pdb
+/Users/diegocollares/bootcamp2020/dotnet/Shop/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/diegocollares/bootcamp2020/dotnet/Shop/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
+/Users/diegocollares/bootcamp2020/dotnet/Shop/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/Users/diegocollares/bootcamp2020/dotnet/Shop/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/diegocollares/bootcamp2020/dotnet/Shop/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/diegocollares/bootcamp2020/dotnet/Shop/obj/Debug/netcoreapp3.1/Shop.csproj.CopyComplete
