@@ -10,6 +10,7 @@ namespace Shop
 {
   public class Startup
     {
+ 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -21,7 +22,12 @@ namespace Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            // services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+
+            services.AddDbContext<DataContext>(options => {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+    
             services.AddScoped<DataContext, DataContext>();
         }
 
