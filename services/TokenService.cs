@@ -9,7 +9,7 @@ namespace Shop.Services
 {
   public static  class TokenService
   {
-    public static string GenerationToken(User user)
+    public static string GenerateToken(User user)
     {
       var tokenHandler = new JwtSecurityTokenHandler();
       var key = Encoding.ASCII.GetBytes(Settings.Secret);
