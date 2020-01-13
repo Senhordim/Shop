@@ -11,9 +11,26 @@ using Shop.Services;
 
 namespace Shop.Controllers
 {
+  
   [Route("v1/users")]
   public class UsersController : Controller
   {
+    [HttpGet]
+    [Route("users")]
+    [Authorize(Roles="manager")]
+    public async Task<ActionResult<User>> Get(
+      [FromServices]DataContext context
+    )
+    {
+      var users = await context
+        .Users
+        .AsNoTracking()
+        .ToArrayAsync();
+
+      return Ok(users);
+    }
+
+
     [HttpPost]
     [Route("")]
     public async Task<ActionResult<User>> Post(
@@ -36,29 +53,29 @@ namespace Shop.Controllers
       }
     }
 
-        [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate(
-          [FromServices] DataContext context,
-          [FromBody]User model)
+    [HttpPost]
+    [Route("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult<dynamic>> Authenticate(
+      [FromServices] DataContext context,
+      [FromBody]User model)
+    {
+        var user = await context.Users
+            .AsNoTracking()
+            .Where(x => x.Username == model.Username && x.Password == model.Password)
+            .FirstOrDefaultAsync();
+
+        if (user == null)
+            return NotFound(new { message = "Usuário ou senha inválidos" });
+
+        var token = TokenService.GenerateToken(user);
+        // Esconde a senha
+        user.Password = "";
+        return new
         {
-            var user = await context.Users
-                .AsNoTracking()
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
-                .FirstOrDefaultAsync();
-
-            if (user == null)
-                return NotFound(new { message = "Usuário ou senha inválidos" });
-
-            var token = TokenService.GenerateToken(user);
-            // Esconde a senha
-            user.Password = "";
-            return new
-            {
-                user = user,
-                token = token
-            };
-        }
+            user = user,
+            token = token
+        };
+    }
   }
 }

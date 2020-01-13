@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -8,11 +9,16 @@ using Shop.Models;
 // Endpoint => URL
 // https://localhost:5001/categories ou http://ocalhost:5001
 
-[Route("categories")]
+[Route("v1/categories")]
 public class CategoriesController : ControllerBase {
 
   [HttpGet]
   [Route("")]
+  [AllowAnonymous]
+
+  [ResponseCache(VaryByHeader = "User-Agent", Location = ResponseCacheLocation.Any, Duration = 30)]
+  // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
   public async Task<ActionResult<List<Category>>> Get(
     [FromServices]DataContext context
   )
@@ -23,6 +29,7 @@ public class CategoriesController : ControllerBase {
 
   [HttpGet]
   [Route("{id:int}")]
+  [AllowAnonymous]
   public async Task<ActionResult<Category>> GetById(
     int id,
     [FromServices]DataContext context
@@ -38,6 +45,7 @@ public class CategoriesController : ControllerBase {
 
   [HttpPost]
   [Route("")]
+  [Authorize(Roles="employee")]
   public async Task<ActionResult<Category>> Post(
       [FromBody]Category model,
       [FromServices]DataContext context
@@ -60,6 +68,7 @@ public class CategoriesController : ControllerBase {
 
   [HttpPut]
   [Route("{id:int}")]
+  [Authorize(Roles="employee")]
   public async Task<ActionResult<Category>> Put(
       int id, 
       [FromBody]Category model,
@@ -90,6 +99,7 @@ public class CategoriesController : ControllerBase {
 
   [HttpDelete]
   [Route("{id:int}")]
+  [Authorize(Roles="employee")]
   public async Task<ActionResult<Category>>Delete(
     int id,
     [FromServices]DataContext context
