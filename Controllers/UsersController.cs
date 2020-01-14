@@ -33,6 +33,7 @@ namespace Shop.Controllers
 
     [HttpPost]
     [Route("")]
+    [AllowAnonymous]
     public async Task<ActionResult<User>> Post(
         [FromBody]User model,
         [FromServices]DataContext context
@@ -43,8 +44,13 @@ namespace Shop.Controllers
       
       try
       {
+        // força usuário ser employee
+        model.Role = "employee";
         context.Users.Add(model);
         await context.SaveChangesAsync();
+
+        // esconder a senha
+        model.Password = "";
         return Ok(model);
       }
       catch
